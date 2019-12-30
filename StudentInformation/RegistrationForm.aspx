@@ -29,6 +29,7 @@
                     <div>
                         <asp:Label runat="server" Text="User Name" Font-Bold="true" />
                         <asp:RequiredFieldValidator ID="UserNameValidator" runat="server" ControlToValidate="txtUsername" ErrorMessage="* User Name Required" ForeColor="#FF3300" />
+                        <asp:Label ID="lblError" runat="server" Text="* User Name Exists" ForeColor="#FF3300" Visible="false" />
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtUsername" name="txtUsername" placeholder="Choose a username" />
                     </div>
                     <div>

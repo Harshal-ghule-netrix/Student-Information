@@ -17,7 +17,7 @@ namespace StudentInformation
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+          
         }
 
         protected void Signupbtn(object sender, EventArgs e)
@@ -28,7 +28,13 @@ namespace StudentInformation
             Username = txtUsername.Text;
             Password = Encrypt.EncryptText(txtPassword.Text, Username);
 
-           
+            if (IsUserExists(Username)) 
+            {
+                lblError.Visible = true;
+                return;
+            }
+
+            lblError.Visible = false;
             using (SqlConnection connectionobj = new SqlConnection(ConnectionStr))
             {
                 connectionobj.Open();
@@ -44,25 +50,48 @@ namespace StudentInformation
                     cmd.Parameters.AddWithValue("@CreatedBy", SqlDbType.VarChar).Value = (Firstname + " " + Lastname).Trim();
                     
                     update = cmd.ExecuteNonQuery();
-                }
-                catch (System.Data.SqlClient.SqlException exception)
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Username already exists !')", true);
-                    Response.Write(exception);
-                }
+                }                
                 catch (Exception exception)
                 {
-                    Response.Write(exception);
-                    //txtFirstName.Text = exception.Message;
+                    
                 }
             }
 
             if (update > 0)
             {
-                Response.Redirect("~/Login.aspx");
+                MessageBox("User successfully registered");
             }
         }
 
-        
+        private bool IsUserExists(string name)
+        {
+            bool exists = false;
+
+            using (SqlConnection ConObj = new SqlConnection(ConnectionStr))
+            {
+                ConObj.Open();
+
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("stpUserExists", ConObj);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@UserName", SqlDbType.VarChar).Value = name.Trim();
+                    exists = (int)cmd.ExecuteScalar() > 0;
+                }
+                catch (Exception exp)
+                {
+                    
+                }
+            }
+
+            return exists;
+        }
+
+        private void MessageBox(string message)
+        {
+            Response.Write("<script language='javascript'>window.alert('" + message + "');window.location='Login.aspx';</script>");
+        }
+
     }
 }
