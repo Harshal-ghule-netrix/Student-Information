@@ -35,12 +35,12 @@
                     <div>
                         <asp:Label runat="server" Text="Password" Font-Bold="true" />
                         <asp:RequiredFieldValidator ID="PasswordValidator" runat="server" ControlToValidate="txtPassword" ErrorMessage="* Password Required" ForeColor="#FF3300" />
-                        <asp:RegularExpressionValidator ID="PasswordRegValidator" runat="server" ControlToValidate="txtPassword" ValidationExpression="^(?=.{8,16}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*$" ErrorMessage="* minimun length of 8 caracters and maximun of 16 at least one digit, lower case and one uppper case" ForeColor="#FF3300" />
+                        <asp:RegularExpressionValidator ID="PasswordRegValidator" runat="server" ControlToValidate="txtPassword" ValidationExpression="^(?=.{8,16}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*$" ErrorMessage="* Minimun Length Of 8 Caracters And Maximun Of 16 Atleast One Digit, Lower Case And One Upper Case" ForeColor="#FF3300" />
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" name="txtPassword" TextMode="Password" placeholder="Enter Password" />
                     </div>
                     <div>
                         <asp:Label runat="server" Text="Confirm Password" Font-Bold="true" />
-                        <asp:CompareValidator ID="CompareValidator" runat="server" ControlToCompare="txtPassword" ControlToValidate="txtConfirmPassword" ErrorMessage="* Password is not matching" ForeColor="#FF3300" />
+                        <asp:CompareValidator ID="CompareValidator" runat="server" ControlToCompare="txtPassword" ControlToValidate="txtConfirmPassword" ErrorMessage="* Password Is Not Matching" ForeColor="#FF3300" />
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtConfirmPassword" name="txtConfirmPassword" TextMode="Password" placeholder="Enter Password" />
                     </div>
                     <hr />

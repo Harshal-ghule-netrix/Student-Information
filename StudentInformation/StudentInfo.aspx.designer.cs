@@ -87,6 +87,15 @@ namespace StudentInformation
         protected global::System.Web.UI.WebControls.RequiredFieldValidator GenderValidator;
 
         /// <summary>
+        /// chkSelectAllSubjects control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSelectAllSubjects;
+
+        /// <summary>
         /// cblSubjects control.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace StudentInformation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList cblSubjects;
+
+        /// <summary>
+        /// CustomValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
 
         /// <summary>
         /// btnSubmit control.

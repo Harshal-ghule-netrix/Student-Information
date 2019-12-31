@@ -104,7 +104,7 @@ namespace StudentInformation
         private void InsertStudent()
         {
             int update = 0;
-            Firstname = txtStudentFirstName.Text; 
+            Firstname = txtStudentFirstName.Text;
             Lastname = txtStudentLastName.Text;
             Gender = GetCheckedRadioButton();
             CreatedBy = Request.QueryString["ID"];
@@ -121,13 +121,13 @@ namespace StudentInformation
                     cmd.Parameters.AddWithValue("@LastName", SqlDbType.VarChar).Value = Lastname.Trim();
                     cmd.Parameters.AddWithValue("@Gender", SqlDbType.Char).Value = Gender;
                     cmd.Parameters.AddWithValue("@CreatedBy", SqlDbType.VarChar).Value = CreatedBy.Trim();
-                    
-                    
+
+
                     update = cmd.ExecuteNonQuery();
 
                     if (update > 0)
                     {
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Student Record Updated Successfully !')", true);
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Student Record Inserted Successfully !')", true);
                     }
                 }
                 catch (System.Data.SqlClient.SqlException exception)
@@ -198,7 +198,7 @@ namespace StudentInformation
 
         protected void GridViewRowDelete(object sender, GridViewDeleteEventArgs e)
         {
-            
+
 
             using (SqlConnection ConObj = new SqlConnection(ConnectionStr))
             {
@@ -213,7 +213,7 @@ namespace StudentInformation
 
                     cmd.ExecuteNonQuery();
 
-                   
+
                 }
                 catch (Exception exception)
                 {
@@ -237,12 +237,13 @@ namespace StudentInformation
 
             txtStudentFirstName.Enabled = false;
             txtStudentLastName.Enabled = false;
+            chkSelectAllSubjects.Checked = false;
 
             lblRollNo.Visible = true;
             lblRollNo.Text = id.Text;
             btnSubmit.Enabled = false;
 
-            FillTextBox(firstname.Text,lastname.Text);
+            FillTextBox(firstname.Text, lastname.Text);
             TickRadioList(gender.Text);
             TickCheckBoxLst(subjects.Text);
             Display();
@@ -261,7 +262,7 @@ namespace StudentInformation
             gvStudentRecord.EditIndex = -1;
             Clear();
             Display();
-            
+
         }
 
         private void UpdateStudentsDetails(int rowIndex)
@@ -376,22 +377,23 @@ namespace StudentInformation
         {
             txtStudentFirstName.Enabled = true;
             txtStudentLastName.Enabled = true;
+            chkSelectAllSubjects.Checked = false;
 
             lblRollNo.Visible = false;
             btnSubmit.Enabled = true;
             txtStudentFirstName.Text = String.Empty;
             txtStudentLastName.Text = String.Empty;
-            UnTickCheckBox();
+            UnTickCheckBoxList();
             UnTickRadioList();
         }
 
         private void TickCheckBoxLst(string subjects)
         {
-            UnTickCheckBox();
+            UnTickCheckBoxList();
             foreach (string sub in subjects.Split(','))
             {
                 string subject = sub.Trim();
-                
+
                 for (int i = 0; i < cblSubjects.Items.Count; i++)
                 {
                     if ((cblSubjects.Items[i].Text).Trim().Equals(subject))
@@ -403,12 +405,22 @@ namespace StudentInformation
 
         }
 
-        private void UnTickCheckBox()
+        private void TickAllCheckBoxLst()
+        {
+            for (int i = 0; i < cblSubjects.Items.Count; i++)
+            {
+                cblSubjects.Items[i].Selected = true;
+            }
+            cblSubjects.Enabled = false;
+        }
+
+        private void UnTickCheckBoxList()
         {
             for (int i = 0; i < cblSubjects.Items.Count; i++)
             {
                 cblSubjects.Items[i].Selected = false;
             }
+            cblSubjects.Enabled = true;
         }
 
         private void TickRadioList(string gender)
@@ -431,10 +443,24 @@ namespace StudentInformation
             }
         }
 
-        private void FillTextBox(string fname , string lname)
+        private void FillTextBox(string fname, string lname)
         {
             txtStudentFirstName.Text = fname;
             txtStudentLastName.Text = lname;
+        }
+
+        protected void CheckBoxCheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbk = sender as CheckBox;
+           
+            if (cbk.Checked)
+            {
+                TickAllCheckBoxLst();
+            }
+            else
+            {
+                UnTickCheckBoxList();
+            }
         }
     }
 }
